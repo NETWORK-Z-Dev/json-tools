@@ -1,5 +1,5 @@
 export default class JSONTools {
-    static checkObjectKeys(obj, path, defaultValue = null) {
+    static checkObjectKeys(obj, path, defaultValue = null, mutate = false) {
         const keys = path.split('.');
 
         function recursiveCheck(currentObj, keyIndex) {
@@ -21,7 +21,8 @@ export default class JSONTools {
             }
         }
 
-        recursiveCheck(obj, 0);
+        if(mutate) recursiveCheck(obj, 0);
+        recursiveCheck(structuredClone(obj), 0);
     }
 
     static findInJson(obj, keyToFind, valueToFind, returnPath = false) {
