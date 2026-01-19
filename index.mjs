@@ -25,6 +25,18 @@ export default class JSONTools {
         recursiveCheck(structuredClone(obj), 0);
     }
 
+    static tryParse(jsonString){
+        if(!jsonString) throw new Error("Invalid JSON string");
+        if(typeof jsonString !== "string") throw new Error(`Suplpied JSON string was not a string. Type: ${typeof jsonString}`);
+
+        try{
+            return JSON.parse(jsonString);
+        }catch(e){
+            console.error(e);
+            return null;
+        }
+    }
+
     static findInJson(obj, keyToFind, valueToFind, returnPath = false) {
         let result = null;
         let foundPath = "";
