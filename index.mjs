@@ -1,3 +1,5 @@
+import path from "path";
+
 export default class JSONTools {
     static checkObjectKeys(obj, path, defaultValue = null, mutate = false) {
         const keys = path.split('.');
@@ -23,6 +25,12 @@ export default class JSONTools {
 
         if(mutate) recursiveCheck(obj, 0);
         recursiveCheck(structuredClone(obj), 0);
+    }
+
+    static createConfig(fileName, fileDir){
+        if(!fs.existsSync(path.join(fileDir, fileName))){
+            fs.writeFileSync(path.join(fileDir, fileName), "{}");
+        }
     }
 
     static tryParse(jsonString){
