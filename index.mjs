@@ -1,4 +1,5 @@
 import path from "path";
+import fs from "fs";
 
 export default class JSONTools {
     static checkObjectKeys(obj, path, defaultValue = null, mutate = false) {
