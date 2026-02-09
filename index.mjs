@@ -28,9 +28,9 @@ export default class JSONTools {
         recursiveCheck(structuredClone(obj), 0);
     }
 
-    static createConfig(fileName, fileDir){
-        if(!fs.existsSync(path.join(fileDir, fileName))){
-            fs.writeFileSync(path.join(fileDir, fileName), "{}");
+    static createConfig(filePath){
+        if(!fs.existsSync(filePath)){
+            fs.writeFileSync(filePath, "{}");
         }
     }
 
