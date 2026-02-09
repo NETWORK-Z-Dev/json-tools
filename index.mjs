@@ -34,6 +34,10 @@ export default class JSONTools {
         }
     }
 
+    static saveConfig(filePath, content){
+        fs.writeFileSync(filePath, JSON.stringify(content, null, 4), {recursive: true});
+    }
+
     static getConfig(configPath){
         return fs.existsSync(configPath) ? this.tryParse(fs.readFileSync(configPath, {encoding: "utf-8"})) : {};
     }
