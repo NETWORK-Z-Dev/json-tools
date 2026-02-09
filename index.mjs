@@ -30,7 +30,7 @@ export default class JSONTools {
 
     static createConfig(filePath){
         if(!fs.existsSync(filePath)){
-            fs.writeFileSync(filePath, "{}");
+            fs.writeFileSync(filePath, "{}", {recursive: true});
         }
     }
 
