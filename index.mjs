@@ -33,6 +33,10 @@ export default class JSONTools {
         }
     }
 
+    static getConfig(configPath){
+        return fs.existsSync(configPath) ? this.tryParse(fs.readFileSync(configPath, {encoding: "utf-8"})) : {};
+    }
+
     static tryParse(jsonString){
         if(!jsonString) throw new Error("Invalid JSON string");
         if(typeof jsonString !== "string") throw new Error(`Suplpied JSON string was not a string. Type: ${typeof jsonString}`);
