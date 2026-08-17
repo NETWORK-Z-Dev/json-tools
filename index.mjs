@@ -5,26 +5,33 @@ export default class JSONTools {
     static checkObjectKeys(obj, path, defaultValue = null, mutate = false) {
         const keys = path.split('.');
 
+        // credit to Ridwan I. @ concordia for finding this and checking it out.
+        const blockedKeys = new Set(['__proto__', 'prototype', 'constructor']);
+        if (keys.some(key => blockedKeys.has(key))) {
+            throw new Error('Unsafe object path');
+        }
+
         function recursiveCheck(currentObj, keyIndex) {
             const key = keys[keyIndex];
 
             if (key === '*') {
                 for (const k in currentObj) {
-                    if (currentObj.hasOwnProperty(k)) {
+                    if (Object.hasOwn(currentObj, k)) {
                         recursiveCheck(currentObj[k], keyIndex + 1);
                     }
                 }
             } else {
-                if (!(key in currentObj)) {
-                    currentObj[key] = (keyIndex === keys.length - 1) ? defaultValue : {};
+                if (!Object.hasOwn(currentObj, key)) {
+                    currentObj[key] = keyIndex === keys.length - 1 ? defaultValue : {};
                 }
+
                 if (keyIndex < keys.length - 1) {
                     recursiveCheck(currentObj[key], keyIndex + 1);
                 }
             }
         }
 
-        if(mutate) recursiveCheck(obj, 0);
+        if (mutate) recursiveCheck(obj, 0);
         recursiveCheck(structuredClone(obj), 0);
     }
 
